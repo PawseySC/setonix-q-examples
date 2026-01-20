@@ -12,8 +12,8 @@
 #SBATCH --job-name=qaoa_job        # Name shown in queue (squeue command)
 #SBATCH --account=pawsey0001-q     # Project account for billing/allocation
 #SBATCH --partition=quantum        # Use the quantum partition (GPU-enabled)
-#SBATCH --nodes=1                  # Number of compute nodes (1 is typical for quantum sims)
-#SBATCH --gpus=1                   # Number of GPUs per node
+#SBATCH --nodes=1                  # Number of compute nodes
+#SBATCH --gpus=1                   # Number of GPUs (Allocation packs)
 #SBATCH --time=00:10:00            # Maximum walltime (HH:MM:SS) - job killed if exceeded
 #SBATCH --export=NONE              # Start with clean environment (recommended)
 #SBATCH --output=%x-%j.out         # Stdout file: %x=job-name, %j=job-id
@@ -31,13 +31,5 @@ module list                            # Print loaded modules (useful for debugg
 
 # Set OpenMP threads to 1 to avoid oversubscription
 export OMP_NUM_THREADS=1
-
-# -----------------------------------------------------------------------------
-# Run the QAOA Script
-# -----------------------------------------------------------------------------
-# srun launches the job on allocated resources:
-#   -N 1    : Use 1 node
-#   -n 1    : Run 1 task (MPI rank)
-#   -c 1    : Use 1 CPU core per task
-#   --gpus=1: Allocate 1 GPU to the task
-srun -N 1 -n 1 -c 1 --gpus=1 python qaoa.py
+# -N 1: use 1 node, -n 1: run 1 task, -c 1: use 1 CPU core per task
+srun -N 1 -n 1 -c 1 --gpus=1 python qaoa.py 
