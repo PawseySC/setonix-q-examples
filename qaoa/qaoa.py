@@ -285,7 +285,7 @@ def main():
     print("-" * 50)
     print("Optimization complete!")
     print(f"Best expected cut value: {best_c:.4f}")
-    print(f"Theoretical maximum for ring graph: {n // 2 + n % 2}")  # Alternating partition
+    print(f"Theoretical maximum for ring graph: {n if n % 2 == 0 else n - 1}")
     print("\nOptimal parameters:")
     for k in range(p):
         print(f"  gamma_{k} = {best_x[k]:.4f}")
